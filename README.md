@@ -12,6 +12,4 @@
 
 If you find errors or flaw, I will be very happy if you report them to me at the provided address.
 
-## License
-- MIT
 
