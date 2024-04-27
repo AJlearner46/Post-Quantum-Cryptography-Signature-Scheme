@@ -44,7 +44,6 @@ def verify_signature( P, G1, G2, Pu, B):
 
 def hash_function(input_matrix):
 
-    # Convert input matrix to bytes
     input_bytes = bytearray()
     for row in input_matrix:
         for num in row:
@@ -54,7 +53,6 @@ def hash_function(input_matrix):
     # Compute hash using SHA-256
     hashed_bytes = hashlib.sha256(input_bytes).digest()
     
-    # Convert hashed bytes back to integers in Z_p
     hashed_vector = []
     for i in range(len(input_matrix[0])):
         idx = i * len(input_matrix) * 2  # Each element occupies 2 bytes
@@ -65,20 +63,18 @@ def hash_function(input_matrix):
     return hashed_vector
 
 def generate_random_matrix(n, m, p):
-    p = int(p)  # Convert p to an integer
+    n = int(n)
+    m = int(m)
     return [[random.randint(0, p-1) for _ in range(m)] for _ in range(n)]
 
 def generate_zero_matrix(n, m):
     return [[0 for _ in range(m)] for _ in range(n)]
 
-#q =  number.getPrime(2048)
-#m = 5
-#n = 3
+
 q, m, n = setup_phase(12)
 B, t, Pu = key_generation(m, n, q)
 P = generate_random_matrix(n, n, q)
 s = generate_random_matrix(1, 1, q)
-#s = np.random.randint(0, q)
 G1, G2 = sign_message(P, t, s)
 
 verification_result = verify_signature(P, G1, G2, Pu, B)
