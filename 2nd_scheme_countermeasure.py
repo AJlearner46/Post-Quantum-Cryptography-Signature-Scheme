@@ -61,21 +61,15 @@ def hash_function(input_vector):
     Returns:
     - hashed_vector: Hashed vector in Z_q^m (list of integers)
     """
-    # Convert input vector to bytes
     input_bytes = bytearray()
     for num in input_vector:
         if isinstance(num, int):
             input_bytes.extend(num.to_bytes((num.bit_length() + 7) // 8, byteorder='big'))
         
-
-    
-    # Compute hash using SHA-256
     hashed_bytes = hashlib.sha256(input_bytes).digest()
     
-    # Convert hashed bytes back to integers in Z_q
     hashed_vector = []
     for i in range(len(input_vector)):
-        #hashed_int = int.from_bytes(hashed_bytes[i:i+2], byteorder='big') % p
         hashed_int = int.from_bytes(hashed_bytes[i*2:(i+1)*2], byteorder='big') % p
         hashed_vector.append(hashed_int)
     
@@ -84,7 +78,7 @@ def hash_function(input_vector):
 
 def generate_random_matrix(n, m, p):
     n = int(n)
-    m = int(m)  # Convert p to an integer
+    m = int(m) 
     return [[random.randint(0, p-1) for _ in range(m)] for _ in range(n)]
 
 start_time = timeit.default_timer()
